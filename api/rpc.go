@@ -1,9 +1,10 @@
 package api
 
 import (
-	"go.uber.org/thriftrw/ptr"
 	"os"
 	"time"
+
+	"go.uber.org/thriftrw/ptr"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
@@ -83,32 +84,33 @@ func (s *UserService) List(ctx context.Context, req *pb.UserListRequest) (*pb.Us
 		return nil, grpc.Errorf(codes.PermissionDenied, "ovpm.GetAnyUserPerm is required for this operation")
 	}
 
-	var ut []*pb.UserResponse_User
-
 	users, err := ovpm.GetAllUsers()
 	if err != nil {
 		logrus.Errorf("users can not be fetched: %v", err)
 		os.Exit(1)
 		return nil, err
 	}
+	logrus.Debug("Get [%d] uers", len(users))
+	ut := make([]*pb.UserResponse_User, 0, len(users))
 	for _, user := range users {
-		isConnected, connectedSince, bytesSent, bytesReceived := user.ConnectionStatus()
+		// isConnected, connectedSince, bytesSent, bytesReceived := user.ConnectionStatus()
 		ut = append(ut, &pb.UserResponse_User{
-			ServerSerialNumber: user.GetServerSerialNumber(),
-			Username:           user.GetUsername(),
-			CreatedAt:          user.GetCreatedAt(),
-			IpNet:              user.GetIPNet(),
-			NoGw:               user.IsNoGW(),
-			HostId:             user.GetHostID(),
-			IsAdmin:            user.IsAdmin(),
-			IsConnected:        isConnected,
-			ConnectedSince:     connectedSince.UTC().Format(time.RFC3339),
-			BytesSent:          bytesSent,
-			BytesReceived:      bytesReceived,
-			ExpiresAt:          user.ExpiresAt().UTC().Format(time.RFC3339),
-			Description:        user.GetDescription(),
+			// ServerSerialNumber: user.GetServerSerialNumber(),
+			Username: user.GetUsername(),
+			// CreatedAt:          user.GetCreatedAt(),
+			// IpNet:              user.GetIPNet(),
+			// NoGw:               user.IsNoGW(),
+			// HostId:             user.GetHostID(),
+			// IsAdmin:            user.IsAdmin(),
+			// IsConnected:        isConnected,
+			// ConnectedSince:     connectedSince.UTC().Format(time.RFC3339),
+			// BytesSent:          bytesSent,
+			// BytesReceived:      bytesReceived,
+			// ExpiresAt:   user.ExpiresAt().UTC().Format(time.RFC3339),
+			// Description: user.GetDescription(),
 		})
 	}
+	logrus.Debug("export [%d] uers", len(ut))
 
 	return &pb.UserResponse{Users: ut}, nil
 }
@@ -289,6 +291,14 @@ func (s *UserService) Renew(ctx context.Context, req *pb.UserRenewRequest) (*pb.
 	}
 
 	return &pb.UserResponse{Users: ut}, nil
+}
+
+func (s *UserService) Commit(ctx context.Context, req *pb.UserCommitRequest) (*pb.UserCommitResponse, error) {
+	err := ovpm.TheServer().EmitWithRestart()
+	if err != nil {
+		return nil, err
+	}
+	return &pb.UserCommitResponse{}, nil
 }
 
 func (s *UserService) GenConfig(ctx context.Context, req *pb.UserGenConfigRequest) (*pb.UserGenConfigResponse, error) {

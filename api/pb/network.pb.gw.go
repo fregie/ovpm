@@ -251,7 +251,7 @@ func RegisterNetworkServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.NetworkService/Create")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.NetworkService/Create", runtime.WithHTTPPathPattern("/api/v1/network/create"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -274,7 +274,7 @@ func RegisterNetworkServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.NetworkService/List")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.NetworkService/List", runtime.WithHTTPPathPattern("/api/v1/network/list"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -297,7 +297,7 @@ func RegisterNetworkServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.NetworkService/Delete")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.NetworkService/Delete", runtime.WithHTTPPathPattern("/api/v1/network/delete"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -320,7 +320,7 @@ func RegisterNetworkServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.NetworkService/GetAllTypes")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.NetworkService/GetAllTypes", runtime.WithHTTPPathPattern("/api/v1/network/getalltypes"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -343,7 +343,7 @@ func RegisterNetworkServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.NetworkService/GetAssociatedUsers")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.NetworkService/GetAssociatedUsers", runtime.WithHTTPPathPattern("/api/v1/network/getassociatedusers"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -366,7 +366,7 @@ func RegisterNetworkServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.NetworkService/Associate")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.NetworkService/Associate", runtime.WithHTTPPathPattern("/api/v1/network/associate"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -389,7 +389,7 @@ func RegisterNetworkServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.NetworkService/Dissociate")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.NetworkService/Dissociate", runtime.WithHTTPPathPattern("/api/v1/network/dissociate"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -451,7 +451,7 @@ func RegisterNetworkServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/pb.NetworkService/Create")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/pb.NetworkService/Create", runtime.WithHTTPPathPattern("/api/v1/network/create"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -471,7 +471,7 @@ func RegisterNetworkServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/pb.NetworkService/List")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/pb.NetworkService/List", runtime.WithHTTPPathPattern("/api/v1/network/list"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -491,7 +491,7 @@ func RegisterNetworkServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/pb.NetworkService/Delete")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/pb.NetworkService/Delete", runtime.WithHTTPPathPattern("/api/v1/network/delete"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -511,7 +511,7 @@ func RegisterNetworkServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/pb.NetworkService/GetAllTypes")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/pb.NetworkService/GetAllTypes", runtime.WithHTTPPathPattern("/api/v1/network/getalltypes"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -531,7 +531,7 @@ func RegisterNetworkServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/pb.NetworkService/GetAssociatedUsers")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/pb.NetworkService/GetAssociatedUsers", runtime.WithHTTPPathPattern("/api/v1/network/getassociatedusers"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -551,7 +551,7 @@ func RegisterNetworkServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/pb.NetworkService/Associate")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/pb.NetworkService/Associate", runtime.WithHTTPPathPattern("/api/v1/network/associate"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -571,7 +571,7 @@ func RegisterNetworkServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/pb.NetworkService/Dissociate")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/pb.NetworkService/Dissociate", runtime.WithHTTPPathPattern("/api/v1/network/dissociate"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return

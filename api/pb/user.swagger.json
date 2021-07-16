@@ -16,6 +16,38 @@
     "application/json"
   ],
   "paths": {
+    "/api/v1/user/commit": {
+      "post": {
+        "operationId": "UserService_Commit",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbUserCommitResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pbUserCommitRequest"
+            }
+          }
+        ],
+        "tags": [
+          "UserService"
+        ]
+      }
+    },
     "/api/v1/user/create": {
       "post": {
         "operationId": "UserService_Create",
@@ -276,6 +308,12 @@
         "STATIC"
       ],
       "default": "NOPREFSTATIC"
+    },
+    "pbUserCommitRequest": {
+      "type": "object"
+    },
+    "pbUserCommitResponse": {
+      "type": "object"
     },
     "pbUserCreateRequest": {
       "type": "object",

@@ -23,6 +23,7 @@ type UserServiceClient interface {
 	Update(ctx context.Context, in *UserUpdateRequest, opts ...grpc.CallOption) (*UserResponse, error)
 	Delete(ctx context.Context, in *UserDeleteRequest, opts ...grpc.CallOption) (*UserResponse, error)
 	Renew(ctx context.Context, in *UserRenewRequest, opts ...grpc.CallOption) (*UserResponse, error)
+	Commit(ctx context.Context, in *UserCommitRequest, opts ...grpc.CallOption) (*UserCommitResponse, error)
 	GenConfig(ctx context.Context, in *UserGenConfigRequest, opts ...grpc.CallOption) (*UserGenConfigResponse, error)
 }
 
@@ -79,6 +80,15 @@ func (c *userServiceClient) Renew(ctx context.Context, in *UserRenewRequest, opt
 	return out, nil
 }
 
+func (c *userServiceClient) Commit(ctx context.Context, in *UserCommitRequest, opts ...grpc.CallOption) (*UserCommitResponse, error) {
+	out := new(UserCommitResponse)
+	err := c.cc.Invoke(ctx, "/pb.UserService/Commit", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *userServiceClient) GenConfig(ctx context.Context, in *UserGenConfigRequest, opts ...grpc.CallOption) (*UserGenConfigResponse, error) {
 	out := new(UserGenConfigResponse)
 	err := c.cc.Invoke(ctx, "/pb.UserService/GenConfig", in, out, opts...)
@@ -97,6 +107,7 @@ type UserServiceServer interface {
 	Update(context.Context, *UserUpdateRequest) (*UserResponse, error)
 	Delete(context.Context, *UserDeleteRequest) (*UserResponse, error)
 	Renew(context.Context, *UserRenewRequest) (*UserResponse, error)
+	Commit(context.Context, *UserCommitRequest) (*UserCommitResponse, error)
 	GenConfig(context.Context, *UserGenConfigRequest) (*UserGenConfigResponse, error)
 	mustEmbedUnimplementedUserServiceServer()
 }
@@ -119,6 +130,9 @@ func (UnimplementedUserServiceServer) Delete(context.Context, *UserDeleteRequest
 }
 func (UnimplementedUserServiceServer) Renew(context.Context, *UserRenewRequest) (*UserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Renew not implemented")
+}
+func (UnimplementedUserServiceServer) Commit(context.Context, *UserCommitRequest) (*UserCommitResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Commit not implemented")
 }
 func (UnimplementedUserServiceServer) GenConfig(context.Context, *UserGenConfigRequest) (*UserGenConfigResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GenConfig not implemented")
@@ -226,6 +240,24 @@ func _UserService_Renew_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserService_Commit_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserCommitRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).Commit(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pb.UserService/Commit",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).Commit(ctx, req.(*UserCommitRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _UserService_GenConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UserGenConfigRequest)
 	if err := dec(in); err != nil {
@@ -270,6 +302,10 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Renew",
 			Handler:    _UserService_Renew_Handler,
+		},
+		{
+			MethodName: "Commit",
+			Handler:    _UserService_Commit_Handler,
 		},
 		{
 			MethodName: "GenConfig",

@@ -147,7 +147,7 @@ func RegisterVPNServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.VPNService/Status")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.VPNService/Status", runtime.WithHTTPPathPattern("/api/v1/vpn/status"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -170,7 +170,7 @@ func RegisterVPNServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.VPNService/Init")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.VPNService/Init", runtime.WithHTTPPathPattern("/api/v1/vpn/init"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -193,7 +193,7 @@ func RegisterVPNServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.VPNService/Update")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.VPNService/Update", runtime.WithHTTPPathPattern("/api/v1/vpn/update"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -216,7 +216,7 @@ func RegisterVPNServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.VPNService/Restart")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.VPNService/Restart", runtime.WithHTTPPathPattern("/api/v1/vpn/restart"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -278,7 +278,7 @@ func RegisterVPNServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/pb.VPNService/Status")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/pb.VPNService/Status", runtime.WithHTTPPathPattern("/api/v1/vpn/status"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -298,7 +298,7 @@ func RegisterVPNServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/pb.VPNService/Init")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/pb.VPNService/Init", runtime.WithHTTPPathPattern("/api/v1/vpn/init"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -318,7 +318,7 @@ func RegisterVPNServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/pb.VPNService/Update")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/pb.VPNService/Update", runtime.WithHTTPPathPattern("/api/v1/vpn/update"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -338,7 +338,7 @@ func RegisterVPNServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/pb.VPNService/Restart")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/pb.VPNService/Restart", runtime.WithHTTPPathPattern("/api/v1/vpn/restart"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return

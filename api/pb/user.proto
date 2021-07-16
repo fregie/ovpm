@@ -56,6 +56,10 @@ message UserGenConfigRequest {
   string username = 1;
 }
 
+message UserCommitRequest {}
+message UserCommitResponse {
+}
+
 service UserService {
   rpc List (UserListRequest) returns (UserResponse) {
     option (google.api.http) = {
@@ -91,6 +95,13 @@ service UserService {
     };
 
   }
+  rpc Commit(UserCommitRequest) returns (UserCommitResponse){
+    option (google.api.http) = {
+      post: "/api/v1/user/commit"
+      body: "*"
+    };
+  }
+
   rpc GenConfig (UserGenConfigRequest) returns (UserGenConfigResponse) {
         option (google.api.http) = {
       post: "/api/v1/user/genconfig"

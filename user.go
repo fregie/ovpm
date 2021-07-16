@@ -7,11 +7,11 @@ import (
 
 	passlib "gopkg.in/hlandau/passlib.v1"
 
-	"github.com/sirupsen/logrus"
 	"github.com/asaskevich/govalidator"
 	"github.com/cad/ovpm/pki"
 	"github.com/google/uuid"
 	"github.com/jinzhu/gorm"
+	"github.com/sirupsen/logrus"
 )
 
 // dbRevokedModel is a database model for revoked VPN users.
@@ -192,7 +192,7 @@ func CreateNewUser(username, password string, nogw bool, hostid uint32, admin bo
 		NoGW:               nogw,
 		HostID:             hostid,
 		Admin:              admin,
-		Description:		description,
+		Description:        description,
 	}
 	user.setPassword(password)
 
@@ -204,9 +204,9 @@ func CreateNewUser(username, password string, nogw bool, hostid uint32, admin bo
 	logrus.Infof("user created: %s", username)
 
 	// EmitWithRestart server config
-	if err = svr.EmitWithRestart(); err != nil {
-		return nil, err
-	}
+	// if err = svr.EmitWithRestart(); err != nil {
+	// 	return nil, err
+	// }
 	return &User{dbUserModel: user}, nil
 }
 
@@ -246,7 +246,8 @@ func (u *User) Update(password string, nogw bool, hostid uint32, admin bool, des
 	}
 	db.Save(u.dbUserModel)
 
-	return svr.EmitWithRestart()
+	// return svr.EmitWithRestart()
+	return nil
 }
 
 // Delete deletes a user by the given username from the database.
@@ -265,9 +266,9 @@ func (u *User) Delete() error {
 	db.Unscoped().Delete(u.dbUserModel)
 	logrus.Infof("user deleted: %s", u.GetUsername())
 
-	if err = TheServer().EmitWithRestart(); err != nil {
-		return err
-	}
+	// if err = TheServer().EmitWithRestart(); err != nil {
+	// 	return err
+	// }
 	u = nil // delete the existing user struct
 	return nil
 }
@@ -280,9 +281,9 @@ func (u *User) ResetPassword(password string) error {
 		return fmt.Errorf("user password can not be updated %s: %v", u.Username, err)
 	}
 	db.Save(u.dbUserModel)
-	if err = TheServer().EmitWithRestart(); err != nil {
-		return err
-	}
+	// if err = TheServer().EmitWithRestart(); err != nil {
+	// 	return err
+	// }
 
 	logrus.Infof("user password reset: %s", u.GetUsername())
 	return nil
@@ -314,9 +315,9 @@ func (u *User) Renew() error {
 	u.ServerSerialNumber = svr.SerialNumber
 
 	db.Save(u.dbUserModel)
-	if err = svr.EmitWithRestart(); err != nil {
-		return err
-	}
+	// if err = svr.EmitWithRestart(); err != nil {
+	// 	return err
+	// }
 
 	logrus.Infof("user renewed cert: %s", u.GetUsername())
 	return nil
